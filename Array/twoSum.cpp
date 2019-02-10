@@ -13,8 +13,4 @@ public:
 
         return vect;
     }
-};~
- ~
- ~
- ~
- ~
+};
