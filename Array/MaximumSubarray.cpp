@@ -1,21 +1,19 @@
- class Solution {
+class Solution {
  public:
      int maxSubArray(vector<int>& nums) {
-         int max_sum, sum;
-         max_sum = sum = accumulate(nums.begin(), nums.end(), 0);
-         int front = 0, back = nums.size() - 1;
-         while (front < back) {
-             if (nums[front] < nums[back]) {
-                 sum = sum - nums[front];
-                 max_sum = (sum > max_sum) ? sum : max_sum;
-                 front++;
-             } else {
-                 sum = sum - nums[back];
-                 max_sum = (sum > max_sum) ? sum : max_sum;
-                 back--;
-             }
+         int sum = 0;
+         for (auto& num : nums) {
+             sum += num;
          }
-
-         return max_sum;
+         return sumSub(nums, 0, nums.size() - 1, sum);
+     }
+     
+     int sumSub(vector<int>& nums, int front, int back, int currentSum) {
+         if (front == back) return nums[front];
+         int result = max(max(sumSub(nums, front + 1, back, currentSum - nums[front]), 
+                              sumSub(nums, front, back - 1, currentSum - nums[back])), 
+                          currentSum);
+         //printf("Current max is %d with front = %d and back = %d\n", result, front, back);
+         return result;
      }
  };
